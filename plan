@@ -1,0 +1,31 @@
+
+Features:
+-User types github user and submits form
+	-Sends POST request with github username
+	-GET user repos from github api
+	-Save repos to database
+-User refreshes page
+	-GET top 25 repos in database
+	-Display repos on page
+
+TODOs:
+-Client-side
+	-Write search function
+		-POST to server
+	-Write feature that displays repos when page is visited
+		-GET from server
+
+-Server-side
+	-Handle POST request
+		-Send get request to github
+		-Save response data to database
+	-Handle GET request
+		-Retrieve data from database
+		-Send to client as response
+		
+
+-Database
+	-Design schema
+	-Write schema
+	-Write save repo(s) function
+
