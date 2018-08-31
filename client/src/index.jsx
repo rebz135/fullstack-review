@@ -22,8 +22,11 @@ class App extends React.Component {
       data: JSON.stringify({term}),
       contentType: "application/json",
       // dataType: "json",
-      success: ()=>{},
-      error: ()=>{}
+      success: (data)=>{
+        console.log(data)
+        this.setState({repos: data})
+      },
+      error: (err)=>{}
     })
   }
 
