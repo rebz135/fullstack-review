@@ -12,17 +12,25 @@ let Repo = mongoose.model('Repo', repoSchema);
 let save = (repoArr) => {
   repoArr.forEach((repo)=>{
   	let tempRepo = new Repo({name: repo.name, html_url: repo.html_url, updated_at: repo.updated_at})
-  	console.log(repo);
+  	// console.log(repo);
   	tempRepo.save(function(err, tempRepo) {
   		if (err) {
-  			return console.error(err);
+  			// return console.error(err);
   		}
-  		console.log('repo saved!', tempRepo)
+  		// console.log('repo saved!', tempRepo)
   	})
   })
 }
 
-module.exports.save = save
+let retrieve = (callback) => {
+	Repo.find((err, repo) => {
+		if (err) return console.error(err);
+		callback(null, repo);
+	})
+}
+
+module.exports.save = save;
+module.exports.retrieve = retrieve;
 
 
 //WHY CAN'T WE USE HTML URL AS UNIQUE?

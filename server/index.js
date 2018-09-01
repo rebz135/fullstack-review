@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const {getReposByUsername} = require('../helpers/github.js')
 const {save} = require('../database/index.js')
+const {retrieve} = require('../database/index.js')
 
 let app = express();
 
@@ -28,10 +29,8 @@ app.post('/repos', function (req, res) {
     res.send(cleanArr);
     save(cleanArr);
   }
-
-	getReposByUsername('rebz135', callback)
-
-
+  console.log('TERM', req.body.term)
+	getReposByUsername(req.body.term, callback)
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
@@ -39,9 +38,21 @@ app.post('/repos', function (req, res) {
 });
 
 app.get('/repos', function (req, res) {
+	let callback = (err, repo) => {
+		let cleanArr = repo.map((obj)=>{
+      let cleanObj = {};
+      cleanObj.name = obj.name;
+      cleanObj.html_url = obj.html_url;
+      cleanObj.updated_at = obj.updated_at;
+      return cleanObj
+    })
+    console.log('CLEANED ARR', cleanArr);
+    res.send(cleanArr)
+	};
+
+	retrieve(callback)
   // TODO - your code here!
   // This route should send back the top 25 repos
-  res.send();
 });
 
 let port = 1129;
